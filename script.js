@@ -72,7 +72,10 @@ file1.addEventListener('change', function() {
 function drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1) {
     for (let i = 0; i < bufferLength1; i++) {
         barHeight1 = dataArray1[i] * 2;
-        ctx1.fillStyle = 'white';
+        const red = 100;
+        const green = 100;
+        const blue = 255;
+        ctx1.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
         ctx1.fillRect(x, canvas1.height - barHeight1, barWidth1, barHeight1);
         x +=barWidth1;
     }
