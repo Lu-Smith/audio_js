@@ -2,16 +2,23 @@ let audio1 = new Audio('data:audio/x-mp3;base64,SUQzAwAAAABCFFRZRVIAAAANAAAB//4y
 
 const audioCtx = new AudioContext();
 const container1 = document.getElementById('container1');
-const canvas1 = document.getElementById('container1');
+const canvas1 = document.getElementById('canvas1');
 const ctx1 = canvas1.getContext('2d');
 canvas1.width = container1.offsetWidth;
 canvas1.height = container1.offsetHeight;
 let audioSource;
-let analayser;
+let analyser;
 
 container1.addEventListener('click', function() {
     audio1.play();
-})
+    audioSource = audioContext.createMediaElementSource(audio1);
+    analyser = audioContext.createAnalyser();
+    audioSource.connect(analyser);
+    analyser.connect(audioContext.destination);
+    analyser.fftSize = 64;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+});
 
 
 
