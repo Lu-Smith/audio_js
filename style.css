@@ -39,6 +39,14 @@ main .containers {
     margin-top: 100px;
 }
 
+main .containers .inside-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
 main .containers div {
     width: 300px;
     height: 300px;
@@ -67,4 +75,54 @@ footer {
 footer a {
     text-decoration: none;
     color: white;
+}
+
+@media only screen and (max-width: 1400px) {
+
+    main {
+        overflow: scroll;
+        height: 87vh;
+    }
+
+    main button {
+        margin-bottom: 100px;
+    }
+    
+    main .containers .inside-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    audio {
+        display: none;
+    }
+
+    footer {
+        height: 3vh;
+    }
+}
+
+@media only screen and (max-width: 820px) {
+
+    main .containers {
+        flex-direction: column;
+        margin-top: 100px;
+    }
+    
+    main .containers .inside-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #container4 {
+        margin-bottom: 15px;
+    }
+
+    #canvas4 {
+        margin-bottom: 15px;
+    }
+
+    footer {
+        font-size: 14px;
+    }
 }
