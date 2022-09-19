@@ -2,14 +2,16 @@ let audio1 = new Audio('data:audio/x-mp3;base64,SUQzAwAAAABCFFRZRVIAAAANAAAB//4y
 
 
 const container1 = document.getElementById('container1');
+const button1 = document.getElementById('button1');
 const canvas1 = document.getElementById('canvas1');
+const file1 = document.getElementById('file-upload1');
 const ctx1 = canvas1.getContext('2d');
 canvas1.width = container1.offsetWidth;
 canvas1.height = container1.offsetHeight;
 let audioSource1;
 let analyser1;
 
-container1.addEventListener('click', function() {
+button1.addEventListener('click', function() {
     const audioContext1 = new AudioContext();
     audio1.play();
     audioSource1 = audioContext1.createMediaElementSource(audio1);
@@ -39,6 +41,12 @@ container1.addEventListener('click', function() {
     }
     animate1();
 });
+
+
+file1.addEventListener('change', function() {
+    console.log(this.files);
+})
+
 
 
 
