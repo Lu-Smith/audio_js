@@ -28,7 +28,7 @@ container1.addEventListener('click', function() {
         x = 0;
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
         for (let i = 0; i < bufferLength1; i++) {
-            barHeight1 = dataArray1[i];
+            barHeight1 = dataArray1[i] * 2;
             ctx1.fillStyle = 'white';
             ctx1.fillRect(x, canvas1.height - barHeight1, barWidth1, barHeight1);
             x +=barWidth1;
