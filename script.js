@@ -9,7 +9,9 @@ canvas1.height = container1.offsetHeight;
 let audioSource;
 let analayser;
 
-
+container1.addEventListener('click', function() {
+    audio1.play();
+})
 
 
 
