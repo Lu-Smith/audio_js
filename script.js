@@ -18,11 +18,11 @@ button1.addEventListener('click', function() {
     analyser1 = audioContext1.createAnalyser();
     audioSource1.connect(analyser1);
     analyser1.connect(audioContext1.destination);
-    analyser1.fftSize = 64;
+    analyser1.fftSize = 1024;
     const bufferLength1 = analyser1.frequencyBinCount;
     const dataArray1 = new Uint8Array(bufferLength1);
 
-    const barWidth1 = (canvas1.width/2)/bufferLength1;
+    const barWidth1 = 15;
     let barHeight1;
     let x;
 
@@ -49,11 +49,11 @@ file1.addEventListener('change', function() {
     analyser1 = audioContext1.createAnalyser();
     audioSource1.connect(analyser1);
     analyser1.connect(audioContext1.destination);
-    analyser1.fftSize = 256;
+    analyser1.fftSize = 1024;
     const bufferLength1 = analyser1.frequencyBinCount;
     const dataArray1 = new Uint8Array(bufferLength1);
 
-    const barWidth1 = canvas1.width/bufferLength1;
+    const barWidth1 = 15;
     let barHeight1;
     let x;
 
@@ -71,16 +71,12 @@ file1.addEventListener('change', function() {
 
 function drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1) {
     for (let i = 0; i < bufferLength1; i++) {
-        barHeight1 = dataArray1[i] * 2;
+        barHeight1 = dataArray1[i] * 1.5;
         ctx1.save();
         ctx1.translate(canvas1.width/2, canvas1.height/2);
-        ctx1.rotate(i + Math.PI * 2 / bufferLength1);
-        const red = i * barHeight1/30;
-        const green = i/2;
-        const blue = barHeight1;
-        ctx1.fillStyle = 'white';
-        ctx1.fillRect(0, 0, barWidth1, 15);
-        ctx1.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+        ctx1.rotate(i * Math.PI * 10 / bufferLength1);
+        const hue = i * 0.8;
+        ctx1.fillStyle = 'hsl(' + hue + ', 100%,'+ barHeight1/3 + '%)';
         ctx1.fillRect(0, 0, barWidth1, barHeight1);
         x +=barWidth1;
         ctx1.restore();
