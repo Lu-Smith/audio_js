@@ -44,6 +44,7 @@ canvas {
     width: 500px;
     height: 500px;
     background-color: rgb(19, 18, 18);
+    /*filter: blur(5px) contrast(5);*/
 }
 
 audio {

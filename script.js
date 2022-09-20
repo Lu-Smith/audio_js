@@ -18,7 +18,7 @@ button1.addEventListener('click', function() {
     analyser1 = audioContext1.createAnalyser();
     audioSource1.connect(analyser1);
     analyser1.connect(audioContext1.destination);
-    analyser1.fftSize = 32;
+    analyser1.fftSize = 64;
     const bufferLength1 = analyser1.frequencyBinCount;
     const dataArray1 = new Uint8Array(bufferLength1);
 
@@ -72,25 +72,18 @@ file1.addEventListener('change', function() {
 function drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1) {
     for (let i = 0; i < bufferLength1; i++) {
         barHeight1 = dataArray1[i] * 2;
-        const red = i * barHeight1/20;
-        const green = i * 4;
-        const blue = barHeight1/2;
+        ctx1.save();
+        ctx1.translate(canvas1.width/2, canvas1.height/2);
+        ctx1.rotate(i + Math.PI * 2 / bufferLength1);
+        const red = i * barHeight1/30;
+        const green = i/2;
+        const blue = barHeight1;
         ctx1.fillStyle = 'white';
-        ctx1.fillRect(canvas1.width/2 - x, canvas1.height - barHeight1 -30, barWidth1, 15);
+        ctx1.fillRect(0, 0, barWidth1, 15);
         ctx1.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
-        ctx1.fillRect(canvas1.width/2 - x, canvas1.height - barHeight1, barWidth1, barHeight1);
+        ctx1.fillRect(0, 0, barWidth1, barHeight1);
         x +=barWidth1;
-    }
-    for (let i = 0; i < bufferLength1; i++) {
-        barHeight1 = dataArray1[i] * 2;
-        const red = i * barHeight1/20;
-        const green = i * 4;
-        const blue = barHeight1/2;
-        ctx1.fillStyle = 'white';
-        ctx1.fillRect(x, canvas1.height - barHeight1 -30, barWidth1, 15);
-        ctx1.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
-        ctx1.fillRect(x, canvas1.height - barHeight1, barWidth1, barHeight1);
-        x +=barWidth1;
+        ctx1.restore();
     }
 }
 
