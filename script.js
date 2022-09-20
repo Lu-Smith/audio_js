@@ -55,7 +55,38 @@ button1.addEventListener('click', function() {
 
 button2.addEventListener('click', function() {
     connect();
-    analyser1.fftSize = 512;
+    analyser1.fftSize = 2048;
+    const bufferLength1 = analyser1.frequencyBinCount;
+    const dataArray1 = new Uint8Array(bufferLength1);
+
+    const barWidth1 = 5;
+    let barHeight1;
+    let x;
+
+    function animate1() {
+        x = 0;
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        for (let i = 0; i < bufferLength1; i++) {
+            barHeight1 = dataArray1[i] * 1.5;
+            ctx1.save();
+            ctx1.translate(canvas1.width/2, canvas1.height/2);
+            ctx1.rotate(i * Math.PI * 40 / bufferLength1);
+            const hue = i * 0.8;
+            ctx1.fillStyle = 'hsl(' + hue + ', 100%,'+ barHeight1/3 + '%)';
+            ctx1.fillRect(0, 0, barWidth1, barHeight1);
+            x +=barWidth1;
+            ctx1.restore();
+        }
+        analyser1.getByteFrequencyData(dataArray1);
+        requestAnimationFrame(animate1);
+
+    }
+    animate1();
+});
+
+button3.addEventListener('click', function() {
+    connect();
+    analyser1.fftSize = 1024;
     const bufferLength1 = analyser1.frequencyBinCount;
     const dataArray1 = new Uint8Array(bufferLength1);
 
@@ -66,28 +97,17 @@ button2.addEventListener('click', function() {
     function animate1() {
         x = 0;
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-        drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
-        analyser1.getByteFrequencyData(dataArray1);
-        requestAnimationFrame(animate1);
-
-    }
-    animate1();
-});
-
-button3.addEventListener('click', function() {
-    connect();
-    analyser1.fftSize = 128;
-    const bufferLength1 = analyser1.frequencyBinCount;
-    const dataArray1 = new Uint8Array(bufferLength1);
-
-    const barWidth1 = 35;
-    let barHeight1;
-    let x;
-
-    function animate1() {
-        x = 0;
-        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-        drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
+        for (let i = 0; i < bufferLength1; i++) {
+            barHeight1 = dataArray1[i] * 1.5;
+            ctx1.save();
+            ctx1.translate(canvas1.width/2, canvas1.height/2);
+            ctx1.rotate(i + Math.PI * 2 / bufferLength1);
+            const hue = i * 8;
+            ctx1.fillStyle = 'hsl(' + hue + ', 100%, 70%)';
+            ctx1.fillRect(0, 30, barWidth1, barHeight1);
+            x += barWidth1;
+            ctx1.restore();
+        }
         analyser1.getByteFrequencyData(dataArray1);
         requestAnimationFrame(animate1);
 
@@ -101,14 +121,31 @@ button4.addEventListener('click', function() {
     const bufferLength1 = analyser1.frequencyBinCount;
     const dataArray1 = new Uint8Array(bufferLength1);
 
-    const barWidth1 = 45;
+    const barWidth1 = 85;
     let barHeight1;
     let x;
 
     function animate1() {
         x = 0;
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-        drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
+        for (let i = 0; i < bufferLength1; i++) {
+            barHeight1 = dataArray1[i] * 1.5;
+            ctx1.save();
+            ctx1.translate(canvas1.width/2, canvas1.height/2);
+            ctx1.rotate(i * Math.PI * 4 / bufferLength1);
+            const hue = i * 28;
+            ctx1.fillStyle = 'hsl(' + hue + ', 90%, 50%)';
+            ctx1.fillRect(canvas1.width/4, 0, barWidth1, barHeight1);
+            ctx1.fillStyle = 'hsl(' + hue/2 +', 100%, 50%)';
+            ctx1.fillRect(0, 0, barWidth1/20, barHeight1);
+            ctx1.fillStyle = 'white';
+            ctx1.beginPath();
+            ctx1.arc(0, 0, barWidth1/10, 0, Math.PI * 2);
+            ctx1.fill();
+            ctx1.closePath();
+            x += barWidth1;
+            ctx1.restore();
+        }
         analyser1.getByteFrequencyData(dataArray1);
         requestAnimationFrame(animate1);
 
@@ -143,7 +180,38 @@ file1.addEventListener('change', function() {
         analyser1.getByteFrequencyData(dataArray1);
         requestAnimationFrame(animate1);
     }
+
     animate1();
+
+    button4.addEventListener('click', function() {
+        const audioContext1 = new AudioContext();
+        const files1 = this.files;
+        const audio1 = document.getElementById('audio1');
+        audio1.src = URL.createObjectURL(files1[0]);
+        audio1.load();
+        audio1.play();
+        audioSource1 = audioContext1.createMediaElementSource(audio1);
+        analyser1 = audioContext1.createAnalyser();
+        audioSource1.connect(analyser1);
+        analyser1.connect(audioContext1.destination);
+        analyser1.fftSize = 1024;
+        const bufferLength1 = analyser1.frequencyBinCount;
+        const dataArray1 = new Uint8Array(bufferLength1);
+    
+        const barWidth1 = 15;
+        let barHeight1;
+        let x;
+    
+        function animate1() {
+            x = 0;
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
+            analyser1.getByteFrequencyData(dataArray1);
+            requestAnimationFrame(animate1);
+        }
+    
+        animate1();
+    })
 
 })
 
