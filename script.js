@@ -90,6 +90,95 @@ function drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1) {
     }
 }
 
+//canvas 2
+const container2 = document.getElementById('container2');
+const button2 = document.getElementById('button2');
+const canvas2 = document.getElementById('canvas2');
+const file2 = document.getElementById('file-upload2');
+const ctx2 = canvas2.getContext('2d');
+canvas2.width = container2.offsetWidth;
+canvas2.height = container2.offsetHeight;
+let audioSource2;
+let analyser2;
+
+button2.addEventListener('click', function() {
+    const audioContext2 = new AudioContext();
+    audio1.play();
+    audioSource2 = audioContext2.createMediaElementSource(audio1);
+    analyser2 = audioContext2.createAnalyser();
+    audioSource2.connect(analyser2);
+    analyser2.connect(audioContext2.destination);
+    analyser2.fftSize = 256;
+    const bufferLength2 = analyser2.frequencyBinCount;
+    const dataArray2 = new Uint8Array(bufferLength2);
+
+    const barWidth2 = (canvas2.width/2)/bufferLength2;
+    let barHeight2;
+    let x;
+
+    function animate2() {
+        x = 0;
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+        drawVisualiser(bufferLength2, x, barWidth2, barHeight2, dataArray2);
+        analyser2.getByteFrequencyData(dataArray2);
+        requestAnimationFrame(animate2);
+
+    }
+    animate2();
+});
+
+
+file2.addEventListener('change', function() {
+    const audioContext2 = new AudioContext();
+    const files2 = this.files;
+    const audio2 = document.getElementById('audio2');
+    audio2.src = URL.createObjectURL(files2[0]);
+    audio2.load();
+    audio2.play();
+    audioSource2 = audioContext2.createMediaElementSource(audio2);
+    analyser2 = audioContext2.createAnalyser();
+    audioSource2.connect(analyser2);
+    analyser2.connect(audioContext2.destination);
+    analyser2.fftSize = 256;
+    const bufferLength2 = analyser2.frequencyBinCount;
+    const dataArray2 = new Uint8Array(bufferLength2);
+
+    const barWidth2 = canvas2.width/bufferLength2;
+    let barHeight2;
+    let x;
+
+    function animate2() {
+        x = 0;
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+        drawVisualiser(bufferLength2, x, barWidth2, barHeight2, dataArray2);
+        analyser2.getByteFrequencyData(dataArray2);
+        requestAnimationFrame(animate2);
+    }
+    animate2();
+
+})
+
+
+function drawVisualiser(bufferLength2, x, barWidth2, barHeight2, dataArray2) {
+    for (let i = 0; i < bufferLength2; i++) {
+        barHeight2 = dataArray2[i] * 2;
+        const red = i * barHeight2/20;
+        const green = i * 4;
+        const blue = barHeight2/2;
+        ctx2.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+        ctx2.fillRect(x, canvas2.height - barHeight2, barWidth2, barHeight2);
+        x +=barWidth2;
+    }
+    for (let i = 0; i < bufferLength2; i++) {
+        barHeight2 = dataArray2[i] * 2;
+        const red = i * barHeight2/20;
+        const green = i * 4;
+        const blue = barHeight2/2;
+        ctx2.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+        ctx2.fillRect(x, canvas2.height - barHeight2, barWidth2, barHeight2);
+        x +=barWidth2;
+    }
+}
 
 
 
