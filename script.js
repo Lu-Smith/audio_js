@@ -3,6 +3,9 @@ let audio1 = new Audio('data:audio/x-mp3;base64,SUQzAwAAAABCFFRZRVIAAAANAAAB//4y
 
 const container1 = document.getElementById('container1');
 const button1 = document.getElementById('button1');
+const button2 = document.getElementById('button2');
+const button3 = document.getElementById('button3');
+const button4 = document.getElementById('button4');
 const canvas1 = document.getElementById('canvas1');
 const file1 = document.getElementById('file-upload1');
 const ctx1 = canvas1.getContext('2d');
@@ -10,19 +13,95 @@ canvas1.width = container1.offsetWidth;
 canvas1.height = container1.offsetHeight;
 let audioSource1;
 let analyser1;
+let audioContext1;
+let MEDIA_ELEMENT_NODES = new WeakMap();
 
-button1.addEventListener('click', function() {
-    const audioContext1 = new AudioContext();
+function connect() {
+    if (audioContext1 == undefined) {
+        audioContext1 = new AudioContext();
+        }
     audio1.play();
-    audioSource1 = audioContext1.createMediaElementSource(audio1);
+    if (MEDIA_ELEMENT_NODES.has(audio1)) {
+        audioSource1 = MEDIA_ELEMENT_NODES.get(audio1);
+      } else {
+        audioSource1 = audioContext1.createMediaElementSource(audio1);
+        MEDIA_ELEMENT_NODES.set(audio1, audioSource1);
+      }
     analyser1 = audioContext1.createAnalyser();
     audioSource1.connect(analyser1);
     analyser1.connect(audioContext1.destination);
+}
+
+button1.addEventListener('click', function() {
+    connect();
     analyser1.fftSize = 1024;
     const bufferLength1 = analyser1.frequencyBinCount;
     const dataArray1 = new Uint8Array(bufferLength1);
 
     const barWidth1 = 15;
+    let barHeight1;
+    let x;
+
+    function animate1() {
+        x = 0;
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
+        analyser1.getByteFrequencyData(dataArray1);
+        requestAnimationFrame(animate1);
+
+    }
+    animate1();
+});
+
+button2.addEventListener('click', function() {
+    connect();
+    analyser1.fftSize = 512;
+    const bufferLength1 = analyser1.frequencyBinCount;
+    const dataArray1 = new Uint8Array(bufferLength1);
+
+    const barWidth1 = 25;
+    let barHeight1;
+    let x;
+
+    function animate1() {
+        x = 0;
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
+        analyser1.getByteFrequencyData(dataArray1);
+        requestAnimationFrame(animate1);
+
+    }
+    animate1();
+});
+
+button3.addEventListener('click', function() {
+    connect();
+    analyser1.fftSize = 128;
+    const bufferLength1 = analyser1.frequencyBinCount;
+    const dataArray1 = new Uint8Array(bufferLength1);
+
+    const barWidth1 = 35;
+    let barHeight1;
+    let x;
+
+    function animate1() {
+        x = 0;
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
+        analyser1.getByteFrequencyData(dataArray1);
+        requestAnimationFrame(animate1);
+
+    }
+    animate1();
+});
+
+button4.addEventListener('click', function() {
+    connect();
+    analyser1.fftSize = 64;
+    const bufferLength1 = analyser1.frequencyBinCount;
+    const dataArray1 = new Uint8Array(bufferLength1);
+
+    const barWidth1 = 45;
     let barHeight1;
     let x;
 
