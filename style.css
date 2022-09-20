@@ -14,53 +14,40 @@ body {
 }
 
 header {
-    height: 10vh;
     padding: 20px 0;
     font-size: 40px;
     line-height: 50px;
     font-family: 'Noto Sans', sans-serif;
 }
 
-main {
-    height: 80vh;
+main .buttons {
+    margin: 30px 0;
 }
 
-main button{
+main button {
     padding: 15px 20px;
     margin: 10px;
     font-size: 20px;
 }
 
-main .containers {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
+main .visualyser {
+    margin-bottom: 80px;
 }
 
-main .containers .inside-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
+main .container1 {
+    width: 500px;
+    height: 500px;
 }
 
-main .containers div {
-    width: 300px;
-    height: 300px;
-    margin: 10px;
-}
 
 canvas {
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 500px;
     background-color: rgb(19, 18, 18);
 }
 
 audio {
-    width: 80%;
+    width: 300px;
     margin: 50px auto;
     display: block;
 }
@@ -75,7 +62,6 @@ input {
 }
 
 footer {
-    height: 10vh;
     padding: 20px 0;
     font-size: 16px;
     line-height: 25px;
@@ -86,69 +72,25 @@ footer a {
     color: white;
 }
 
-@media only screen and (max-width: 1400px) {
-
-    header {
-        font-size: 38px;
-        line-height: 48px;
-    }
-
-    main {
-        height: 1000px;
-    }
-
-    main button {
-        margin-bottom: 150px;
-    }
-    
-    main .containers .inside-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    main .containers div {
-        margin-bottom: 60px;
-    }
-
-    audio {
-        display: none;
-    }
-
-    input {
-        margin-top: 10px;
-    }
-
-    footer {
-        height: 3vh;
-    }
-}
-
-@media only screen and (max-width: 820px) {
+@media only screen and (max-width: 520px) {
 
     header {
         font-size: 34px;
-        line-height: 44px;
+        line-height: 48px;
     }
 
-    main {
-        height: 1700px;
+    main .container1 {
+        width: 320px;
+        height: 320px;
     }
 
-    main .containers {
-        display: flex;
-        flex-direction: column;
+    canvas {
+        width: 320px;
+        height: 320px;
     }
 
-    .second {
-        position: relative;
-        top: 370px;
-    }
-
-    input {
-        margin-top: 10px;
-    }
-
-    footer {
-        height: 3vh;
+    audio {
+        width: 240px;
+        margin: 30px auto;
     }
 }
