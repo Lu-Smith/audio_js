@@ -153,8 +153,7 @@ button4.addEventListener('click', function() {
     animate1();
 });
 
-
-file1.addEventListener('change', function() {
+function ownMusic() {
     const audioContext1 = new AudioContext();
     const files1 = this.files;
     const audio1 = document.getElementById('audio1');
@@ -182,38 +181,9 @@ file1.addEventListener('change', function() {
     }
 
     animate1();
+}
 
-    button4.addEventListener('click', function() {
-        const audioContext1 = new AudioContext();
-        const files1 = this.files;
-        const audio1 = document.getElementById('audio1');
-        audio1.src = URL.createObjectURL(files1[0]);
-        audio1.load();
-        audio1.play();
-        audioSource1 = audioContext1.createMediaElementSource(audio1);
-        analyser1 = audioContext1.createAnalyser();
-        audioSource1.connect(analyser1);
-        analyser1.connect(audioContext1.destination);
-        analyser1.fftSize = 1024;
-        const bufferLength1 = analyser1.frequencyBinCount;
-        const dataArray1 = new Uint8Array(bufferLength1);
-    
-        const barWidth1 = 15;
-        let barHeight1;
-        let x;
-    
-        function animate1() {
-            x = 0;
-            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-            drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1);
-            analyser1.getByteFrequencyData(dataArray1);
-            requestAnimationFrame(animate1);
-        }
-    
-        animate1();
-    })
-
-})
+file1.addEventListener('change', ownMusic);
 
 
 function drawVisualiser(bufferLength1, x, barWidth1, barHeight1, dataArray1) {
